@@ -1,0 +1,7 @@
+quarkus:
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/quotations
+    db-kind: postgres
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:root}
