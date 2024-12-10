@@ -1,0 +1,34 @@
+mp:
+  messaging:
+    outgoing:
+      proposal:
+        connector: smallrye-kafka
+        topic: proposal
+  connector:
+    smallrye-kafka.bootstrap.servers: localhost:9092
+
+quarkus:
+  http:
+    port: 8081
+
+  oidc:
+    auth-server-url: ${AUTH_SERVER_URL:http://localhost:8180/realms/proposals}
+    client-id: ${AUTH_CLIENT_ID:root}
+    credentials:
+      secret: ${AUTH_CLIENT_SECRET:secret}
+
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/quotations
+    db-kind: postgres
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:root}
+
+  jaeger:
+    service-name: proposals
+    sampler-type: const
+    sampler-param: 1
+
+  log:
+    console:
+      format: %d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n
